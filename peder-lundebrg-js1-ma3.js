@@ -22,7 +22,27 @@ In the catch method of your code, redirect to error.html if there is an error.
 https://api.rawg.io/api/games?genres=sports
  */
 
+function loadGames(json) {
 
+    console.dir(json);
+    const games = json.results;
+
+
+ const baseUrl = "https://api.rawg.io/api/games?genres=sports";
+    const gamesUrl = `${baseUrl}games`;
+
+    for (let i = 0; i < games.length; i++) 
+
+    fetch(gamesUrl)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(json) {
+        loadGames(json);
+    })
+    .catch(function(error) {
+        console.dir(error);
+    });
 
 /* Question 3
 Refer: lesson 3
