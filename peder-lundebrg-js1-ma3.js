@@ -8,10 +8,11 @@ function(a, b) {
 }
  */
 
-
 (a, b) => {
-    return a - b
-}
+  return a - b;
+};
+
+
 
 /* Question 2
 Refer: lesson 2 / 4
@@ -21,25 +22,31 @@ In the catch method of your code, redirect to error.html if there is an error.
 
 https://api.rawg.io/api/games?genres=sports
  */
-    fetch('https://api.rawg.io/api/games?genres=sports')
-    .then(function(response) {
-        return response.json();
-    }).then(function(json) {
-     json.results.forEach(element => {
-           console.dir(element.name);
-       });
-    }).catch(function(error) {
-        console.log("error");
+
+fetch("https://api.rawg.io/api/games?genres=sports")
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(json) {
+    json.results.forEach(element => {
+      console.dir(element.name);
     });
+  })
+  .catch(function(error) {
+    console.log("error");
+  });
 
 
-    
 /* Question 3
 Refer: lesson 3
 Replace the word cats with the word giraffes in the following sentence:
 
 These cats are outrageous. */
 
+const replaceText = "These cats are outrageous".replace(/cats/g, "giraffes");
+
+replaceText.innerText = replaceText;
+console.log(replaceText);
 
 
 /* Question 4
@@ -55,6 +62,17 @@ If there is a userID parameter and its value is 10 or greater, redirect to secon
 https://my.site.com?userId=7 */
 
 
+const queryString = document.location.search;
+const params = new URLSearchParams(queryString);
+
+if (!params.has("userId")) {
+  document.location.href = "third.html";
+} else if (params.get("userId") < 10) {
+  document.location.href = "first.html";
+} else {
+  document.location.href = "second.html";
+}
+
 
 /* Question 5
 Refer: lesson 4
@@ -65,7 +83,9 @@ Write code that removes the button, and only the button, from its parent element
     <button class="btn">Click me</button>
 </div> */
 
-
+const container = document.querySelector(".container");
+const button = document.querySelector(".btn");
+container.removeChild(button);
 
 
 
@@ -80,6 +100,16 @@ Add the new item as the second item in the ul below (add it after Cows).
     <li class="elephants">Elephants</li>
 </ul> */
 
+const animals = document.querySelector(".animals");
+const elephants = document.querySelector(".elephants");
+
+const addAnimal = document.createElement("li");
+addAnimal.className = "parrots";
+addAnimal.innerHTML = "Parrots";
+animals.appendChild(addAnimal);
+
+elephants.before(addAnimal);
+
 
 
 /* Question 7
@@ -92,3 +122,15 @@ In the catch method, log the error that may be returned.
 
 https://api.rawg.io/api/games/3801
 <div class="rating"></div> */
+
+fetch(baseUrl)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(json) {
+    const ratingDiv = document.querySelector(".rating");
+    ratingDiv.innerHTML = json.rating;
+  })
+  .catch(function(error) {
+    console.dir(error);
+  });
